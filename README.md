@@ -164,20 +164,28 @@ For the Teams Agent specifically:
 
 ### Directory Structure
 ```
-TeamsAgent/
-├── FeedbackApi/          # Web API for feedback management
-├── FeedbackViewer/       # Blazor app for viewing feedback
-├── M365Agent/            # Microsoft 365 integration
-├── TeamsAgent/           # Main Teams agent application
-├── TeamsAgent.AppHost/   # .NET Aspire host
+M365Agent/                        # Microsoft 365 Agents Solution
+├── M365Agent.Api/               # Core AI agent service
+├── M365Agent.App/               # Bot application for M365 Agents Playground
+├── M365Agent.AppHost/           # .NET Aspire orchestration
+└── M365Agent.ServiceDefaults/   # Shared service configurations
+
+TeamsAgent/                       # Teams Agent Solution  
+├── FeedbackApi/                 # Web API for feedback management
+├── FeedbackViewer/              # Blazor app for viewing feedback
+├── M365Agent/                   # Teams app integration components
+├── TeamsAgent/                  # Main Teams agent application
+├── TeamsAgent.AppHost/          # .NET Aspire host
 └── TeamsAgent.ServiceDefaults/  # Shared configurations
 ```
 
 ### Key Configuration Files
-- `TeamsAgent.slnx` - Solution file
-- `appsettings.json` - Application configuration
+- `M365Agent.slnx` - M365 Agents solution file
+- `TeamsAgent.slnx` - Teams Agent solution file
+- `appsettings.json` - Application configurations
 - `launchSettings.json` - Development launch profiles
-- `manifest.json` - Teams app manifest (in M365Agent)
+- `manifest.json` - Teams app manifest (in TeamsAgent/M365Agent)
+- `m365agents.yml` - M365 Agents configuration (in TeamsAgent/M365Agent)
 
 ## 🔧 Technologies Showcased
 
@@ -187,8 +195,15 @@ TeamsAgent/
 - **ASP.NET Core**: Enhanced web development features
 - **Entity Framework Core**: Advanced ORM capabilities
 
+### Microsoft 365 & AI Platforms
+- **Microsoft 365 Agents Framework**: Next-generation conversational AI development
+- **Microsoft Agents AI Library**: Advanced agent building capabilities
+- **Model Context Protocol (MCP)**: Structured access to external data sources
+- **Azure OpenAI**: Large language model integration with function invocation
+- **M365 Agents Playground**: Development and testing environment
+
 ### Microsoft Teams Platform
-- **Teams AI Library V2**: Next-generation conversational AI
+- **Teams AI Library V2**: Next-generation conversational AI for Teams
 - **Teams Toolkit**: Modern development experience
 - **Adaptive Cards**: Rich interactive components
 - **Message Extensions**: Enhanced user interactions
@@ -203,7 +218,8 @@ TeamsAgent/
 - **Microservices Architecture**: Distributed application design
 - **API-First Development**: RESTful service design
 - **Cloud-Native**: Azure-ready applications
-- **.NET Aspire**: Service orchestration and management
+- **.NET Aspire**: Service orchestration and management for both solutions
+- **Dev Tunnels**: Secure external access for development
 
 ## 📄 License
 
