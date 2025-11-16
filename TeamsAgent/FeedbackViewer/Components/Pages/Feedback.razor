@@ -1,0 +1,132 @@
+﻿@page "/feedback"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@inject IHttpClientFactory HttpClientFactory
+@inject IConfiguration Configuration
+
+<PageTitle>Feedback - FeedbackViewer</PageTitle>
+
+<div class="feedback-container">
+    <div class="page-header">
+        <h1>
+            <i class="bi bi-chat-square-text page-icon"></i>
+            Feedback Entries
+        </h1>
+        <p class="subtitle">Real-time feedback from your users</p>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Loading feedback...</p>
+        </div>
+    }
+    else if (feedbackEntries == null || !feedbackEntries.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="bi bi-inbox"></i>
+            </div>
+            <h3>No feedback yet</h3>
+            <p>Feedback entries will appear here once users start submitting their thoughts.</p>
+        </div>
+    }
+    else
+    {
+        <div class="controls-bar">
+            <div class="stats">
+                <span class="stat-badge">
+                    <span class="stat-number">@feedbackEntries.Count</span>
+                    <span class="stat-label">Total Entries</span>
+                </span>
+            </div>
+            <button class="btn btn-primary" @onclick="RefreshFeedback">
+                <i class="bi bi-arrow-clockwise btn-icon"></i>
+                Refresh
+            </button>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th class="col-id">
+                            <i class="bi bi-hash"></i> ID
+                        </th>
+                        <th class="col-reaction">
+                            <i class="bi bi-emoji-smile"></i> Reaction
+                        </th>
+                        <th class="col-feedback">
+                            <i class="bi bi-chat-left-quote"></i> Feedback
+                        </th>
+                        <th class="col-date">
+                            <i class="bi bi-calendar-event"></i> Created At
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in feedbackEntries)
+                    {
+                        <tr class="feedback-row">
+                            <td class="cell-id">
+                                <span class="id-badge">#@entry.Id</span>
+                            </td>
+                            <td class="cell-reaction">
+                                <span class="reaction">@entry.Reaction</span>
+                            </td>
+                            <td class="cell-feedback">
+                                <span class="feedback-text">@entry.Feedback</span>
+                            </td>
+                            <td class="cell-date">
+                                <span class="date-text">@entry.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                <span class="time-text">@entry.CreatedAt.ToString("HH:mm")</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    private List<FeedbackViewer.Models.FeedbackEntry>? feedbackEntries;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFeedback();
+    }
+
+    private async Task LoadFeedback()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            var httpClient = HttpClientFactory.CreateClient("FeedbackApi");
+            
+            // Use service discovery URL
+            var feedbackApiUrl = Configuration["services:feedbackapi:https:0"] 
+                               ?? Configuration["services:feedbackapi:http:0"]
+                               ?? "https://localhost:7001";
+
+            feedbackEntries = await httpClient.GetFromJsonAsync<List<FeedbackViewer.Models.FeedbackEntry>>($"{feedbackApiUrl}/api/feedback");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading feedback: {ex.Message}");
+            feedbackEntries = new List<FeedbackViewer.Models.FeedbackEntry>();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task RefreshFeedback()
+    {
+        await LoadFeedback();
+    }
+}

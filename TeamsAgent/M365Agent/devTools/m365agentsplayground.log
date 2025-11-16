@@ -1,0 +1,20 @@
+debug Telemetry: agents-playground-cli/cliStart {"cleanProperties":{"isExec":"true","argv":"<REDACTED: user-file-path>,<REDACTED: user-file-path>,start"}}
+
+log Listening on 56150
+log Microsoft 365 Agents Playground is being launched for you to debug the app: http://localhost:56150
+debug started web socket client
+debug started web socket client
+log Waiting for connection of endpoint: http://127.0.0.1:5130/api/messages
+log waiting for 1 resources: http://127.0.0.1:5130/api/messages
+log wait-on(17944) complete
+log Events recording disabled.
+debug Telemetry: agents-playground-server/eventsRecording {"cleanProperties":{"enabled":"false"}}
+
+debug Telemetry: agents-playground-server/getConfig {"cleanProperties":{"internalConfig":"{\"locale\":\"it-IT\",\"localTimezone\":\"Europe/Rome\",\"channelId\":\"msteams\",\"debugConfig\":{\"eventsRecordingEnabled\":false}}"}}
+
+debug Telemetry: agents-playground-server/sendActivity {"cleanProperties":{"activityType":"installationUpdate","conversationId":"8c9c67ec-d388-49d4-bcf0-5d22c1935f0a","headers":"{\"Authorization\":\"Bearer <REDACTED: credential>.<REDACTED: credential>.TFMtk_-<REDACTED: credential>\",\"x-ms-agents-playground\":\"true\"}"}}
+
+debug Telemetry: agents-playground-server/sendActivity {"cleanProperties":{"activityType":"conversationUpdate","conversationId":"8c9c67ec-d388-49d4-bcf0-5d22c1935f0a","headers":"{\"Authorization\":\"Bearer <REDACTED: credential>.<REDACTED: credential>.TFMtk_-<REDACTED: credential>\",\"x-ms-agents-playground\":\"true\"}"}}
+
+debug Telemetry: agents-playground-server/sendActivity {"cleanProperties":{"activityType":"message","conversationId":"8c9c67ec-d388-49d4-bcf0-5d22c1935f0a","headers":"{\"Authorization\":\"Bearer <REDACTED: credential>.<REDACTED: credential>.<REDACTED: credential>\",\"x-ms-agents-playground\":\"true\"}"}}
+

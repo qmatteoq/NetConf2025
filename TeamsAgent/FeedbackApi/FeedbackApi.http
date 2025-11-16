@@ -1,0 +1,35 @@
+@FeedbackApi_HostAddress = http://localhost:5285
+
+### Submit feedback with "like" reaction
+POST {{FeedbackApi_HostAddress}}/api/feedback
+Content-Type: application/json
+
+{
+  "reaction": "like",
+  "feedback": "{\"feedbackText\":\"This is a good response!\"}"
+}
+
+###
+
+### Submit feedback with "dislike" reaction
+POST {{FeedbackApi_HostAddress}}/api/feedback
+Content-Type: application/json
+
+{
+  "reaction": "dislike",
+  "feedback": "{\"feedbackText\":\"This response needs improvement.\"}"
+}
+
+###
+
+### Get all feedback
+GET {{FeedbackApi_HostAddress}}/api/feedback
+Accept: application/json
+
+###
+
+### Get feedback by ID (replace {id} with actual ID)
+GET {{FeedbackApi_HostAddress}}/api/feedback/1
+Accept: application/json
+
+###

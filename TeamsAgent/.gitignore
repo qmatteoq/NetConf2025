@@ -1,0 +1,7 @@
+/.vs
+/.vscode
+*.env.dev.user
+*.env.local
+*.env.local.user
+*.env.dev
+/M365Agent/appPackage/build

@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="FeedbackApi/FeedbackApi.csproj" />
+  <Project Path="FeedbackViewer/FeedbackViewer.csproj" />
+  <Project Path="M365Agent/M365Agent.atkproj" Type="a9e3f50b-275e-4af7-adce-8be12d41e305">
+    <Deploy />
+  </Project>
+  <Project Path="TeamsAgent.AppHost/TeamsAgent.AppHost.csproj" />
+  <Project Path="TeamsAgent.ServiceDefaults/TeamsAgent.ServiceDefaults.csproj" />
+  <Project Path="TeamsAgent/TeamsAgent.csproj" />
+</Solution>
