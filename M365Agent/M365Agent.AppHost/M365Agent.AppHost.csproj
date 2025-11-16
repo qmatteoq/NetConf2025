@@ -1,0 +1,21 @@
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.0.0">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>46aadc49-7088-4810-a021-2c03f5d4a19c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\M365Agent.Api\M365Agent.Api.csproj" />
+    <ProjectReference Include="..\M365Agent\M365Agent.App.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Azure" Version="13.0.0" />
+    <PackageReference Include="Aspire.Hosting.DevTunnels" Version="13.0.0-preview.1.25560.3" />
+  </ItemGroup>
+
+</Project>

@@ -16,79 +16,69 @@ Welcome to the official demo repository for .NET Conf 2025 held in Milan! This r
 
 ## 🎯 Overview
 
-This repository demonstrates modern .NET development practices and Microsoft Teams application development, featuring:
+This repository demonstrates cutting-edge .NET development practices and Microsoft 365/Teams application development through two comprehensive solutions:
 
-- **Teams Agents & AI Integration**: Advanced conversational agents using Microsoft Teams SDK
-- **Feedback Management**: Complete feedback collection and viewing solutions
+### M365Agent Solution
+- **Microsoft 365 Agents Framework**: Next-generation conversational AI agents
+- **Azure OpenAI Integration**: Advanced language model capabilities with function invocation
+- **Model Context Protocol**: Direct access to Microsoft Learn documentation
+- **M365 Agents Playground**: Compatible with Microsoft's agent development environment
+
+### TeamsAgent Solution  
+- **Teams SDK Integration**: Advanced conversational agents for Microsoft Teams
+- **Feedback Management**: Complete end-to-end feedback collection and viewing system
+- **Azure AI Search**: Intelligent document search and RAG capabilities
+- **Microservices Architecture**: Distributed application design with .NET Aspire
+
+### Common Features
 - **Azure Integration**: Cloud-native applications with Azure services
 - **Modern Web Development**: ASP.NET Core with Blazor components
 - **.NET 10 Features**: Latest .NET capabilities and performance improvements
+- **.NET Aspire**: Service orchestration and management for both solutions
 
-## 🚀 Projects
+## 🚀 Solutions
 
-### 1. **TeamsAgent** 
-A comprehensive Teams application featuring AI-powered agents with Azure AI Search integration.
+This repository contains two comprehensive solutions showcasing different aspects of modern .NET and Microsoft 365 development:
 
-**Key Features:**
-- Teams SDK integration
-- Azure AI Search for document indexing
-- Retrieval Augmented Generation (RAG) capabilities
-- Custom data source integration
+### 🤖 **M365Agent Solution**
+A complete Microsoft 365 Agents solution featuring AI-powered conversational agents with Model Context Protocol (MCP) integration.
 
-**Technologies:** ASP.NET Core, Microsoft Teams API, Azure AI Search, Azure Identity
-
-### 2. **FeedbackApi**
-RESTful API service for managing feedback entries with Entity Framework Core.
+#### Projects:
+- **M365Agent.Api**: Core AI agent service with Azure OpenAI integration
+- **M365Agent.App**: Microsoft 365 Agents Playground compatible bot application  
+- **M365Agent.AppHost**: .NET Aspire orchestration for the M365 solution
+- **M365Agent.ServiceDefaults**: Shared service configurations
 
 **Key Features:**
-- RESTful API endpoints
-- Entity Framework Core with SQLite
-- OpenAPI/Swagger documentation
-- Cross-origin resource sharing (CORS)
+- Microsoft 365 Agents framework integration
+- Azure OpenAI chat client with function invocation
+- Model Context Protocol (MCP) for Microsoft Learn documentation access
+- LearnAgent specialized for Microsoft products and services questions
+- .NET Aspire orchestration with dev tunnels
+- M365 Agents Playground compatibility
 
-**Technologies:** ASP.NET Core Web API, Entity Framework Core, SQLite
+**Technologies:** .NET Aspire, Azure OpenAI, Microsoft Agents AI, Model Context Protocol, Microsoft 365 Agents
 
-### 3. **FeedbackViewer**
-Modern web application for viewing and managing feedback using Blazor Server.
+### 🔧 **TeamsAgent Solution** 
+A comprehensive Teams application ecosystem featuring AI-powered agents, feedback management, and Azure AI Search integration.
+
+#### Projects:
+- **TeamsAgent**: Main Teams agent application with Azure AI Search
+- **FeedbackApi**: RESTful API service for feedback management
+- **FeedbackViewer**: Blazor Server application for viewing feedback
+- **M365Agent**: Teams app integration components
+- **TeamsAgent.AppHost**: .NET Aspire application host
+- **TeamsAgent.ServiceDefaults**: Shared service configurations
 
 **Key Features:**
+- Teams SDK integration with AI capabilities
+- Azure AI Search for document indexing and RAG
+- Complete feedback management system
 - Interactive Blazor components
-- Real-time feedback display
-- Responsive design
-- Integration with FeedbackApi
+- Microservices architecture with .NET Aspire
+- Cross-service communication and orchestration
 
-**Technologies:** Blazor Server, ASP.NET Core
-
-### 4. **M365Agent**
-Microsoft 365 integrated agent demonstrating Teams app development.
-
-**Key Features:**
-- Microsoft 365 integration
-- Teams app manifest
-- AI Toolkit project structure
-- Development tools and configuration
-
-**Technologies:** Microsoft 365, Teams Platform, AI Toolkit
-
-### 5. **TeamsAgent.AppHost**
-.NET Aspire application host for orchestrating and managing distributed applications.
-
-**Key Features:**
-- Service orchestration
-- Development dashboard
-- Service discovery
-- Configuration management
-
-**Technologies:** .NET Aspire
-
-### 6. **TeamsAgent.ServiceDefaults**
-Shared service configurations and extensions for consistent application behavior.
-
-**Key Features:**
-- Common service configurations
-- Shared extensions
-- Consistent logging and monitoring
-- Reusable components
+**Technologies:** ASP.NET Core, Microsoft Teams API, Azure AI Search, Blazor Server, Entity Framework Core, .NET Aspire
 
 ## 📋 Prerequisites
 
@@ -107,6 +97,10 @@ Before running the applications in this repository, ensure you have:
 ### Microsoft 365 & Teams
 - [Microsoft 365 Developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
 - [Teams Toolkit](https://docs.microsoft.com/microsoftteams/platform/toolkit/teams-toolkit-fundamentals)
+- [Microsoft 365 Agents Playground](https://aka.ms/agents-playground) (for M365Agent solution)
+
+### Development Tools
+- [AI Toolkit for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio) (optional, for enhanced AI development experience)
 
 ## 🛠️ Getting Started
 
@@ -117,16 +111,37 @@ cd NetConf2025
 ```
 
 ### 2. Setup Azure Resources
-1. Create an Azure AI Search service
-2. Create an Azure OpenAI resource
+1. Create an Azure AI Search service (for TeamsAgent solution)
+2. Create an Azure OpenAI resource (for both solutions)
 3. Note down the connection strings and API keys
 
 ### 3. Configure Application Settings
-Update the `appsettings.Development.json` files in each project with your Azure service configurations.
+Update the `appsettings.Development.json` files in each solution with your Azure service configurations.
 
-### 4. Build and Run
+### 4. Running the M365Agent Solution
 ```bash
-# Navigate to the solution directory
+# Navigate to the M365Agent directory
+cd M365Agent
+
+# Restore dependencies
+dotnet restore
+
+# Build the solution
+dotnet build
+
+# Run the AppHost (this will start the API and App services)
+dotnet run --project M365Agent.AppHost
+```
+
+The M365Agent solution will:
+- Start the API service with the LearnAgent
+- Start the bot application compatible with M365 Agents Playground
+- Create a dev tunnel for external access
+- Optionally launch the M365 Agents Playground emulator
+
+### 5. Running the TeamsAgent Solution
+```bash
+# Navigate to the TeamsAgent directory
 cd TeamsAgent
 
 # Restore dependencies
@@ -139,7 +154,7 @@ dotnet build
 dotnet run --project TeamsAgent.AppHost
 ```
 
-### 5. Teams Agent Setup
+### 6. Teams Agent Specific Setup
 For the Teams Agent specifically:
 1. Run the `Indexer.ps1` script to create your document index
 2. Configure your Teams app manifest

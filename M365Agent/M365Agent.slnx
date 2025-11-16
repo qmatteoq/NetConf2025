@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="M365Agent.Api/M365Agent.Api.csproj" />
+  <Project Path="M365Agent.AppHost/M365Agent.AppHost.csproj" />
+  <Project Path="M365Agent.ServiceDefaults/M365Agent.ServiceDefaults.csproj" />
+  <Project Path="M365Agent.App/M365Agent.App.csproj" />
+</Solution>

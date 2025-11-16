@@ -1,0 +1,6 @@
+@M365Agent.Api_HostAddress = http://localhost:5190
+
+GET {{M365Agent.Api_HostAddress}}/agent/chat?prompt=What%20is%20.NET?
+Accept: application/json
+
+###
