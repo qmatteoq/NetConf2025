@@ -68,15 +68,34 @@ app.MapGet("/agent/chat", async (
     [FromKeyedServices("LearnAgent")] AIAgent learnAgent,
     [FromKeyedServices("Enterprise Knowledge Agent")] AIAgent enterpriseAgent,
     [FromKeyedServices("ReportAgent")] AIAgent reportAgent,
-    string prompt) =>
+    string prompt,
+    ILogger<Program> logger) =>
 {
+    logger.LogInformation("API invoked: /agent/chat");
+    logger.LogInformation("Input parameter - Prompt: {Prompt}", prompt);
+
     var workflow = AgentWorkflowBuilder.BuildSequential(learnAgent, enterpriseAgent, reportAgent);
     var workflowAgent = workflow.AsAgent();
     var thread = workflowAgent.GetNewThread();
     var response = await workflowAgent.RunAsync(prompt);
 
+    logger.LogInformation("Workflow completed. Total messages: {MessageCount}", response.Messages.Count);
+    
+    for (int i = 0; i < response.Messages.Count; i++)
+    {
+        var message = response.Messages[i];
+        logger.LogInformation("Message {Index}: Role={Role}, Text={Text}", 
+            i + 1, 
+            message.Role, 
+            message.Text);
+    }
+
     var lastMessage = response.Messages.LastOrDefault();
-    return Results.Ok(lastMessage?.Text);
+    var output = lastMessage?.Text;
+    
+    logger.LogInformation("Output parameter - Response: {Response}", output);
+
+    return Results.Ok(output);
 });
 
 
