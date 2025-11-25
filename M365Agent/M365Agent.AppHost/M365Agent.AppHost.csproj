@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\M365Agent.Api\M365Agent.Api.csproj" />
-    <ProjectReference Include="..\M365Agent\M365Agent.App.csproj" />
+    <ProjectReference Include="..\M365Agent.App\M365Agent.App.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,5 +2,6 @@
 
 GET {{M365Agent.Api_HostAddress}}/agent/chat?prompt=What%20is%20.NET?
 Accept: application/json
+Timeout: 180
 
 ###

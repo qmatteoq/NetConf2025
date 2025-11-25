@@ -5,7 +5,7 @@ using ModelContextProtocol.Server;
 
 namespace M365Agent.Api.Agents
 {
-    public class LearnAgent
+    public class LearnAgent(IChatClient client)
     {
         private const string AgentName = "LearnAgent"; 
         private const string AgentInstructions = """
@@ -23,12 +23,7 @@ namespace M365Agent.Api.Agents
             """;
 
         private ChatClientAgent _agent;
-        private IChatClient _client;
-
-        public LearnAgent(IChatClient client)
-        {
-            _client = client;
-        }
+        private IChatClient _client = client;
 
         public async Task<AIAgent> InitializeAgent()
         {
@@ -45,18 +40,7 @@ namespace M365Agent.Api.Agents
                 instructions: AgentInstructions,
                 tools: [.. mcpTools.Cast<AITool>()]);
 
-            return _agent.AsBuilder().Build();
-        }
-
-        public async Task<string> InvokeAgentAsync(string prompt)
-        {
-            if (_agent == null)
-            {
-                throw new InvalidOperationException("Agent not initialized. Call InitializeAgent() first.");
-            }
-
-            var response = await _agent.RunAsync(prompt);
-            return response.Text;
+            return _agent;
         }
     }
 }

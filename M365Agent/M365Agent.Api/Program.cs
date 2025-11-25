@@ -2,6 +2,7 @@ using Azure.AI.OpenAI;
 using M365Agent.Api.Agents;
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Hosting;
+using Microsoft.Agents.AI.Workflows;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.AI;
 
@@ -28,10 +29,28 @@ var client = new AzureOpenAIClient(
 
 builder.Services.AddChatClient(client);
 
-var agent = new LearnAgent(client);
-await agent.InitializeAgent();
+builder.AddAIAgent("LearnAgent", (sp, key) =>
+{
+    var chatClient = sp.GetRequiredService<IChatClient>();
+    var learnAgent = new LearnAgent(chatClient);
+    var agent = learnAgent.InitializeAgent().GetAwaiter().GetResult();
+    return agent.AsBuilder().Build();
+});
 
-builder.Services.AddSingleton(agent);
+builder.AddAIAgent("Enterprise Knowledge Agent", (sp, key) =>
+{
+    var enterpriseAgent = new EnterpriseKnowledgeAgent(sp.GetRequiredService<IConfiguration>());
+    var agent = enterpriseAgent.InitializeAgent().GetAwaiter().GetResult();
+    return agent.AsBuilder().Build();
+});
+
+builder.AddAIAgent("ReportAgent", (sp, key) =>
+{
+    var chatClient = sp.GetRequiredService<IChatClient>();
+    var reportAgent = new ReportAgent(chatClient);
+    var agent = reportAgent.InitializeAgent().GetAwaiter().GetResult();
+    return agent.AsBuilder().Build();
+});
 
 var app = builder.Build();
 
@@ -46,11 +65,18 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/agent/chat", async (
-    [FromServices] LearnAgent learnAgent,
+    [FromKeyedServices("LearnAgent")] AIAgent learnAgent,
+    [FromKeyedServices("Enterprise Knowledge Agent")] AIAgent enterpriseAgent,
+    [FromKeyedServices("ReportAgent")] AIAgent reportAgent,
     string prompt) =>
 {
-    var response = await learnAgent.InvokeAgentAsync(prompt);
-    return Results.Ok(response);
+    var workflow = AgentWorkflowBuilder.BuildSequential(learnAgent, enterpriseAgent, reportAgent);
+    var workflowAgent = workflow.AsAgent();
+    var thread = workflowAgent.GetNewThread();
+    var response = await workflowAgent.RunAsync(prompt);
+
+    var lastMessage = response.Messages.LastOrDefault();
+    return Results.Ok(lastMessage?.Text);
 });
 
 
